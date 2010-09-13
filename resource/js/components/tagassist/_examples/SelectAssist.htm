@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>SelectAssist</title>
+<link href="../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+<script type="text/javascript" src="../../../apps/core_dom_youa.js"></script>
+<script type="text/javascript" src="../../tagassist/selectassist_base.js"></script>
+<script type="text/javascript" src="../../tagassist/areadata.js"></script>
+<script type="text/javascript">
+var DianAddress={};
+DianAddress.init=function(){
+	SelectAssist.cascadeDianAddress({
+		selects:['provT4','cityT4','countyT4']
+	});
+}
+
+
+	
+
+</script>
+
+<script type="text/javascript" src="http://db-omega.db01.baidu.com:8090/data/location"></script>
+
+<style>
+select{width:150px;};
+</style>
+</head>
+<body>
+<div id="doc3">
+	<div id=hd>
+		SelectAssist示例: 更新options，地址级联等
+	</div>
+	<div id="bd" >
+		<div class="section-ctn">
+			<ul>
+				<li>
+					<select id="country1"><option value=""></option></select>
+					<input type=button value="appendOptions" onclick="SelectAssist.appendOptions($('country1'),SelectAssist.AREAS.COUNTRIES,'080');">
+				</li>
+				<li>省份
+					<select id="province1"><option value=""></option></select>
+					<input type=button value="refreshOptions" onclick="SelectAssist.refreshOptions($('province1'),SelectAssist.AREAS.PROVINCES,'北京');">
+				</li>
+				<li>主要城市
+					<select id="city1"><option value=""></option></select>
+					<input type=button value="refreshOptions" onclick="SelectAssist.refreshOptions($('city1'),SelectAssist.AREAS.MAIN_CITIES,null,1);">
+				</li>
+				<li>省市联动
+					<select id="provT" ><option value=""></option></select>
+					<input type=button value="绑定级联" onclick="SelectAssist.cascadeArea({selects:['provT','cityT']});this.disabled=true;">
+					<select id="cityT" ><option value=""></option></select>
+				</li>
+				<li>省市县联动(有初始值defaultValue)
+					<select id="provT2" defaultValue="北京"><option value=""></option></select>
+					<input type=button value="初始化" onclick="SelectAssist.cascadeArea({selects:['provT2','cityT2','countyT2']});this.disabled=true;">
+					<select id="cityT2" defaultValue="北京市"><option value=""></option></select>
+					<select id="countyT2" defaultValue="县1"><option value=""></option></select>
+				</li>
+				<li>省市县联动(无空白值)
+					<select id="provT3" defaultValue="北京"></select>
+					<input type=button value="初始化" onclick="SelectAssist.cascadeArea({selects:['provT3','cityT3','countyT3']});this.disabled=true;">
+					<select id="cityT3" ></select>
+					<select id="countyT3" ></select>
+				</li>
+				<li>商圈地址联动
+					<select id="provT4" defaultValue="北京"></select>
+					<input type=button value="初始化" onclick="DianAddress.init();this.disabled=true;">
+					<select id="cityT4" ></select>
+					<select id="countyT4" ></select>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="section-ctn">
+			<h3 class="section-hd">transferOption/moveOption</h3>
+			<div>
+				<table>
+				<tr > 
+					<td> 
+						<select id="srcSelect1" size=10 multiple ondblclick="SelectAssist.transferOption(this,$('objSelect1'))"> 
+							<option value="1">test1</option> 
+							<option value="2">test2</option> 
+							<option value="3">test3</option> 
+							<option value="4">test4</option> 
+							<option value="5">test5</option> 
+							<option value="6">test6</option> 
+							<option value="7">test7</option> 
+							<option value="8">test8</option> 
+							<option value="9">test9 abcde abcde abcde abcde abcde abcde abcde abcde </option> 
+						</select>
+					</td> 
+					<td width="30px">    
+						<input align="left" type=button value=">>"  onclick="SelectAssist.transferOption($('srcSelect1'),$('objSelect1'),true)"  ><br><br>
+						<input align="left" type=button value=">"  onclick="SelectAssist.transferOption($('srcSelect1'),$('objSelect1'))"  ><br><br>
+						<input align="left" type=button value="<"  onclick="SelectAssist.transferOption($('objSelect1'),$('srcSelect1'))"  ><br><br>
+						<input align="left" type=button value="<<"  onclick="SelectAssist.transferOption($('objSelect1'),$('srcSelect1'),true)"  >
+					</td>
+					<td> 
+						<select id="objSelect1" size=10 multiple ondblclick="SelectAssist.transferOption(this,$('srcSelect1'))"> 
+							<option value="11">test11</option> 
+							<option value="12">test12</option> 
+							<option value="13">test13</option> 
+							<option value="14">test14</option> 
+							<option value="15">test15</option> 
+							<option value="16">test16</option> 
+						</select>
+					</td> 
+					<td width="30px">
+						<input type=button value="AA"  onclick="SelectAssist.moveOption($('objSelect1'),-2)" > <br><br> 
+						<input type=button value="A"  onclick="SelectAssist.moveOption($('objSelect1'),-1)" > <br><br> 
+						<input type=button value="V"  onclick="SelectAssist.moveOption($('objSelect1'),1)" ><br><br> 
+						<input type=button value="VV"  onclick="SelectAssist.moveOption($('objSelect1'),2)" >
+
+					</td>
+				</tr> 
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="ft">
+		QW
+	</div>
+</div>
+</body>
+<script>
+
+</script>
+</html>

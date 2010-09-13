@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3c.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Ajax2.0 Manager Test</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+		<style type="text/css">
+			body{
+				text-align: center;
+			}
+			#wrapper{
+				width: 700px;
+				margin: auto;
+			}
+			fieldset{
+				border: none;
+				width: 332px;
+				height: 266px;
+				float: left;
+				background:url(loginCtBg.gif) no-repeat 0 0;
+				padding-left:0;
+				padding-right:0;
+				position: relative;
+				overflow: hidden;
+				}
+				fieldset textarea{
+					display:none;
+					position: absolute;
+					top: -10px;
+					left: 0;
+					width: 90%;
+					height: 88%;
+					border: none;
+					margin-left: 20px;
+					background-color: #F7F7F7;
+				}
+			legend{
+				color: #669900;
+				font-weight: bold;
+				padding-bottom: 8px;
+			}
+			.comment,.keyword{
+				border: 1px solid #66CCFF;
+				margin-left: 30px;
+				margin-top: 10px;
+				padding: 10px;
+				width: 250px;
+				height: 170px;
+				text-align: left;
+				background-color: #ffffff;
+				overflow: scroll;
+			}
+			.keyword{
+				width: 270px;
+				padding: 2px 0 0 0;
+				height: 20px;
+				margin-left: 0;
+				line-height: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+		<fieldset>
+			<legend>顺序执行</legend>
+			<div>
+				<button id="ajax1">Add 1</button>
+				<button id="ajax2">Add 2</button>
+				<button id="ajax3">Add 3</button>
+				<button id="ajax4">Add 4</button>
+				<div id="content1" class="comment">
+				
+				</div>
+				<textarea>
+				var Q = QW.AjaxManager.Queue;
+				var queue = new Q(2);
+				QW.ObjectH.mix(Ajax.options,{
+					url: 'server.php',
+					onsuccess: function(data,ops){
+						$('content1').innerHTML += ops.data + '<br>';
+					}
+				});
+				$$('ajax1').on('click',function(){
+					var ajax = new Ajax({
+						data: 'Ajax 1 Completed!'
+					});
+					queue.add(ajax);
+				});
+				$$('ajax2').on('click',function(){
+					var ajax = new Ajax({
+						data: 'Ajax 2 Completed!'
+					});
+					queue.add(ajax);
+				});
+				$$('ajax3').on('click',function(){
+					var ajax = new Ajax({
+						data: 'Ajax 3 Completed!'
+					});
+					queue.add(ajax);
+				});
+				$$('ajax4').on('click',function(){
+					var ajax = new Ajax({
+						data: 'Ajax 4 Completed!'
+					});
+					queue.add(ajax);
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>废弃旧请求</legend>
+			<div>
+				<button id="ajax5">Add 1</button>
+				<button id="ajax6">Add 2</button>
+				<button id="ajax7">Add 3</button>
+				<button id="ajax8">Add 4</button>
+				<div id="content2" class="comment">
+				
+				</div>
+				<textarea>
+				var queue2 = new Q(2);
+				$$('ajax5').on('click',function(){
+					var ajax = new Ajax({
+						label: 'Ajax 1',
+						pd: 'Ajax 1 Completed!'
+					});
+					queue2.add(ajax);
+					$('content2').innerHTML += 'Ajax 1 added into queue<br>';
+				});
+				$$('ajax6').on('click',function(){
+					var ajax = new Ajax({
+						label: 'Ajax 2'
+					});
+					queue2.add(ajax);
+					$('content2').innerHTML += 'Ajax 2 added into queue<br>';
+				});
+				$$('ajax7').on('click',function(){
+					var ajax = new Ajax({
+						label: 'Ajax 3'
+					});
+					queue2.add(ajax);
+					$('content2').innerHTML += 'Ajax 3 added into queue<br>';
+				});
+				$$('ajax8').on('click',function(){
+					var ajax = new Ajax({
+						label: 'Ajax 4'
+					});
+					queue2.add(ajax);
+					$('content2').innerHTML += 'Ajax 4 added into queue<br>';
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../apps/core_dom_all.js"></script>
+	<script type="text/javascript" src="demo.js"></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+		QW.ObjectH.mix(window,QW);
+		NodeW.query(0,'.comment').on('dblclick',function(){
+			NodeW.nextSibling(this,'textarea').show('block');
+		});
+		
+		NodeW.query(0,'.comment + textarea').on('dblclick',function(){
+			(new NodeW(this)).hide();
+		});
+
+		DomU.ready(function(){
+			var Q = QW.AjaxManager.Queue;
+			var queue = new Q(1);
+			QW.ObjectH.mix(Ajax.options,{
+				url: 'server.php',
+				data: {timeout: 2},
+				cache: false,
+				oncancel: function(xhr,ops){
+					$('content2').innerHTML += ops.label + ' aborted!<br>';
+				}
+			});
+			$$('ajax1').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 1',
+					onsuccess: function(data,ops){
+						$('content1').innerHTML += ops.label + ' Completed!<br>';
+						$('content1').scrollTop = $('content1').offsetHeight;
+					}
+				});
+				queue.add(ajax);
+				$('content1').innerHTML += 'Ajax 1 added into queue<br>';
+			});
+			$$('ajax2').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 2',
+					onsuccess: function(data,ops){
+						$('content1').innerHTML += ops.label + ' Completed!<br>';
+						$('content1').scrollTop = $('content1').offsetHeight;
+					}
+				});
+				queue.add(ajax);
+				$('content1').innerHTML += 'Ajax 2 added into queue<br>';
+			});
+			$$('ajax3').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 3',
+					onsuccess: function(data,ops){
+						$('content1').innerHTML += ops.label + ' Completed!<br>';
+						$('content1').scrollTop = $('content1').offsetHeight;
+					}
+				});
+				queue.add(ajax);
+				$('content1').innerHTML += 'Ajax 3 added into queue<br>';
+			});
+			$$('ajax4').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 4',
+					onsuccess: function(data,ops){
+						$('content1').innerHTML += ops.label + ' Completed!<br>';
+						$('content1').scrollTop = $('content1').offsetHeight;
+					}
+				});
+				queue.add(ajax);
+				$('content1').innerHTML += 'Ajax 4 added into queue<br>';
+			});		
+			
+			var queue2 = new Q(2);
+			$$('ajax5').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 5',
+					onsuccess: function(data,ops){
+						$('content2').innerHTML += ops.label + ' Completed!<br>';
+						$('content2').scrollTop = $('content2').offsetHeight;
+					}
+				});
+				queue2.add(ajax);
+				$('content2').innerHTML += 'Ajax 5 added into queue<br>';
+			});
+			$$('ajax6').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 6',
+					onsuccess: function(data,ops){
+						$('content2').innerHTML += ops.label + ' Completed!<br>';
+						$('content2').scrollTop = $('content2').offsetHeight;
+					}
+				});
+				queue2.add(ajax);
+				$('content2').innerHTML += 'Ajax 6 added into queue<br>';
+			});
+			$$('ajax7').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 7',
+					onsuccess: function(data,ops){
+						$('content2').innerHTML += ops.label + ' Completed!<br>';
+						$('content2').scrollTop = $('content2').offsetHeight;
+					}
+				});
+				queue2.add(ajax);
+				$('content2').innerHTML += 'Ajax 7 added into queue<br>';
+			});
+			$$('ajax8').on('click',function(){
+				var ajax = new Ajax({
+					label: 'Ajax 8',
+					onsuccess: function(data,ops){
+						$('content2').innerHTML += ops.label + ' Completed!<br>';
+						$('content2').scrollTop = $('content2').offsetHeight;
+					}
+				});
+				queue2.add(ajax);
+				$('content2').innerHTML += 'Ajax 8 added into queue<br>';
+			});
+		});
+	//]]>
+	</script>
+</html>

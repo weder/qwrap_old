@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>Tree</name>
+		<author>JK</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>树1</title>
+			<discription>第一个例子。</discription>
+			<url>Tree-Demo.htm</url>
+			<image>1.jpg</image>
+		</example>
+	</examples>
+</config>

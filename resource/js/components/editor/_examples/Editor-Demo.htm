@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>IUI: Editor Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="https://www.baifubao.com/css/bbp/bbp-panel.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../assets/editor.css" rel="stylesheet" type="text/css" media="screen"/>
+	<script type="text/javascript" src="../../../apps/core_dom_all.js"></script>
+	<script type="text/javascript" src="../../dragdrop/dragdrop.js"></script>
+	<script type="text/javascript" src="../../panel/panel.js"></script>
+	<script type="text/javascript" src="../../../components/editor/editor.js"></script>
+		<style>
+		.panel-drag-proxy { position:absolute; border:2px dashed #ccc; display:none; z-index:9999999; }
+		.panel-drag-proxy-dragging { display:block; }
+		</style>
+
+</head>
+<body>
+<div id=doc3>
+<form name="form1" method="get" onsubmit="return true">
+	Editor sample:2008-04-01
+	<hr/> 
+	<div id="editorContainer" ></div>
+	<textarea name="editorContent" style="height:300px;display:none" title="用这个textarea来提交数据，或设edit里的初始值" >Editor1 <img src="../tifiles/tismiley/i_f06.gif">汉字测试<img src="../tifiles/tismiley/i_f06.gif">--<a href="g">google</a>--<a href=b>baidu</a> fdsafdf</textarea>
+	<script type="text/javascript">
+	var editor =  new QW.Editor({container:$("editorContainer"),textarea:document.form1.editorContent,height:300}); 
+	</script>
+
+
+
+	<input type=button value="提交之前需要调用editor.prepare4Submit()" onclick="editor.prepare4Submit();"/>
+	<input type=button value="editor.focus()" onclick="editor.focus();"/>
+
+
+<hr/>
+
+
+	<div id="editorContainer2" ></div>
+	<textarea name="editorContent2" style="height:300px;display:none" >第二个实例</textarea>
+	<script type="text/javascript">
+	var editor2 =  new QW.Editor({container:$("editorContainer2"),textarea:document.form1.editorContent2,height:300,tiConfig:Editor.TiConfigs.mini}); 
+	</script>
+
+</form>
+
+
+</div>
+
+</body>
+
+
+</html>

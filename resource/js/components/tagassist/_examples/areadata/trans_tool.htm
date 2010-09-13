@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>SelectAssist 地址数据转化</title>
+	<link href="../../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+	<script type="text/javascript" src="../../../../apps/core_dom_pure.js"></script>
+	<script type="text/javascript">
+		var $=QW.NodeH.$;
+	</script>
+	<style>
+		textarea{width:600px;height:300px;}
+	</style>
+</head>
+<body  style="text-align:left;">
+<div id="doc3">
+	<div id=hd>
+		地址数据转化。
+	</div>
+	<div id="bd" >
+		<div class="section-ctn">
+			<h3 class="section-hd">地址源数据</h3>
+			<div>
+				<textarea id="addrSrc"></textarea><br/>
+				<input type=button value="压缩以上数据(不带邮编)" onclick="dataCom(false)"/><br/>
+				<input type=button value="压缩以上数据(带邮编)" onclick="dataCom(true)"/><br/>
+				<textarea id="addrSrcCom"></textarea>
+			</div>
+		</div>
+	</div>
+	<div id="ft">
+		QW
+	</div>
+</div>
+
+<script>
+function dataCom(needZipCode){
+	var data=$("addrSrc").value.split("\n");
+	var dataCom=[];
+
+	var p="",pc="";
+	for(var i=0;i<data.length;i++){
+		var d=data[i].trim().split("	");
+		if(d[0]!=p) {//省不同
+			dataCom.push(";;"+d[0]+"::"+d[1]+":"+(d[2]||""));
+		}
+		else if(d[1]!=pc){//地区不同
+			dataCom.push(";"+d[1]+":"+(d[2]||""));
+		}
+		else{
+			dataCom.push(","+d[2]);
+		}
+		if(needZipCode && d[3]) dataCom.push("|"+d[3]);
+		p=d[0];pc=d[1];
+	}
+	$("addrSrcCom").value=dataCom.join("");
+}
+
+</script>
+
+</body>
+
+</html>
+
+
+

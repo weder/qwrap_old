@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>Suggest</name>
+		<author>Remember2015</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>Test</title>
+			<discription></discription>
+			<url>base.html</url>
+			<image>test.jpg</image>
+		</example>	
+
+
+	</examples>
+</config>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>Ajax</name>
+		<author>Miller</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>Ajax基本用法</title>
+			<discription></discription>
+			<url>basic.html</url>
+			<image>basic.jpg</image>
+		</example>	
+		<example>
+			<title>Ajax管理器</title>
+			<discription></discription>
+			<url>manager.html</url>
+			<image>manager.jpg</image>
+		</example>	
+	</examples>
+</config>

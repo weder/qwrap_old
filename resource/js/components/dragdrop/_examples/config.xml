@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>DragDrop</name>
+		<author>wc</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>布局拖拽简易版本</title>
+			<discription></discription>
+			<url>layout.htm</url>
+			<image>layout.jpg</image>
+		</example>	
+		<example>
+			<title>普通带目标拖拽</title>
+			<discription></discription>
+			<url>demo.htm</url>
+			<image>demo.jpg</image>
+		</example>
+
+	</examples>
+</config>

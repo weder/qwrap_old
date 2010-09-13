@@ -1,0 +1,817 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3c.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Ajax2.0 Basic Test</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+		<style type="text/css">
+			body{
+				text-align: center;
+			}
+			#wrapper{
+				width: 700px;
+				margin: auto;
+			}
+			fieldset{
+				border: none;
+				width: 332px;
+				height: 266px;
+				float: left;
+				background:url(loginCtBg.gif) no-repeat 0 0;
+				padding-left:0;
+				padding-right:0;
+				position: relative;
+				overflow: hidden;
+				}
+				fieldset textarea{
+					display:none;
+					position: absolute;
+					top: -10px;
+					left: 0;
+					width: 90%;
+					height: 88%;
+					border: none;
+					margin-left: 20px;
+					background-color: #F7F7F7;
+				}
+			legend{
+				color: #669900;
+				font-weight: bold;
+				padding-bottom: 8px;
+			}
+			.comment,.keyword{
+				border: 1px solid #66CCFF;
+				margin-left: 30px;
+				margin-top: 10px;
+				padding: 10px;
+				width: 250px;
+				height: 80px;
+				text-align: left;
+				background-color: #ffffff;
+			}
+			.keyword{
+				width: 270px;
+				padding: 2px 0 0 0;
+				height: 20px;
+				margin-left: 0;
+				line-height: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+		<fieldset>
+			<legend>Get/Post(String)</legend>
+			<div>
+				<button id="getString">GET(String Data)</button>
+				<button id="postString">POST(String Data)</button>
+				<div id="content1" class="comment">
+
+				</div>
+				<textarea>
+				Ajax.get('server.php','key=value',function(text){
+					$('content1').innerHTML = text;
+				});
+				Ajax.post('server.php','key=value',function(text){
+					$('content1').innerHTML = text;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(Object)</legend>
+			<div>
+				<button id="getObject">GET(Object Data)</button>
+				<button id="postObject">POST(Object Data)</button>
+				<div id="content2" class="comment">
+
+				</div>
+				<textarea>
+				Ajax.get('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content2').innerHTML = text;
+				});
+				Ajax.post('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content2').innerHTML = text;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(Global Config)</legend>
+			<div>
+				<button id="get3">GET</button>
+				<button id="post3">POST</button>
+				<div id="content3" class="comment">
+
+				</div>
+				<textarea>
+				ObjectH.mix(Ajax.options,{
+					headers:{
+						'X-Sender':'X-Test-Header'
+					}
+				});
+				Ajax.get('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content3').innerHTML = text;
+				});
+				Ajax.post('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content3').innerHTML = text;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(Timeout 2000ms)</legend>
+			<div>
+				<button id="get4">GET</button>
+				<button id="post4">POST</button>
+				<div id="content4" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'server.php',
+					timeout: 2000,
+					onbefore: function(){
+						$('content4').innerHTML = '请求中...';
+					},
+					onerror: function(xhr,options,status){
+						$('content4').innerHTML = 'Error occurred! Error type is: ' + status;
+					},
+					oncomplete: function(){
+						$('content4').innerHTML += ' Request Completed!';
+					}
+				});
+				ajax.request({
+					timeout: 4
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(Form)</legend>
+			<div>
+				<button id="get5">GET</button>
+				<button id="post5">POST</button>
+				<br>
+				<label>Get Form</label><br>
+				<form id="getForm" action="server.php" method="get">
+					<label>name:<input type="text" name="name"></label>
+					<label>country:
+					<select name="country">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
+					</select></label>
+				</form>
+				<br>
+				<label>Post Form</label><br>
+				<form id="postForm" action="server.php" method="post">
+					<label>name:<input type="text" name="name"></label>
+					<label>country:
+					<select name="country">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
+					</select></label>
+				</form>
+				<div id="content5" class="comment">
+
+				</div>
+				<textarea>
+				Ajax.get($('getForm'),function(text){
+					$('content5').innerHTML = text;
+				});
+				Ajax.post($('postForm'),function(text){
+					$('content5').innerHTML = text;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(Abort)</legend>
+			<div>
+				<button id="get6">GET</button>
+				<button id="post6">POST</button>
+				<div id="content6" class="comment">
+
+				</div>
+				<textarea>
+				var abortGetAjax = new Ajax({
+					url: 'server.php',
+					method: 'get',
+					data: 'timeout=10',
+					onbefore: function(){
+						$('content6').innerHTML = '请求中...';
+					},
+					oncancel: function(xhr,options){
+						$('content6').innerHTML = 'Request canceled!';
+					}
+				});
+				abortGetAjax.request();
+				abortGetAjax.cancel();
+
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(before Event)</legend>
+			<div>
+				<button id="get7">GET</button>
+				<button id="post7">POST</button>
+				<div id="content7" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'server.php',
+					method: 'get',
+					onbefore: function(){
+						return confirm('是否继续发送请求？');
+					},
+					onsuccess: function(text){
+						$('content7').innerHTML = '请求已发送！';
+					}
+				});
+				ajax.request({test:'test'});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(同步请求)</legend>
+			<div>
+				<button id="get8">GET</button>
+				<button id="post8">POST</button>
+				<div id="content8" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'server.php',
+					async: false,
+					onbefore: function(){
+						$('content8').innerHTML = '请求中...';
+					},
+					method: 'get',
+					onsuccess: function(text){
+						$('content8').innerHTML = text;
+					}
+				});
+				ajax.request({timeout:5});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get(dataType为json)</legend>
+			<div>
+				<button id="get9">GET</button>
+				<button id="post9">POST</button>
+				<div id="content9" class="comment">
+
+				</div>
+				<textarea>
+				Ajax.getJSON('server.php',{type:'json'},function(json){
+					$('content9').innerHTML = "json.content: " + json.content;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get(dataType为jsonp)</legend>
+			<div>
+				<input type="text" id="suggestKeyword" class="keyword">
+				<div id="content10" class="comment" style="overflow: scroll">
+
+				</div>
+				<textarea>
+				var keyword = this.value;
+				var url = 'http://youa.baidu.com/suggest/se/s';
+				Ajax.getJSONP(url,{
+					cmd: 'suggest',
+					type: 'kwd',
+					max_count: 10,
+					charset: 'utf-8',
+					category: 0,
+					keyword: keyword
+				},function(json){
+					var html = '';
+					if( json.err != 'ok' )
+						html = '服务器错误！';
+					else{
+						var r = [];
+						ArrayH.forEach(json.r,function(item){
+							r.push(item.display);
+						});
+						html = r.join('<br>');
+					}
+					$('content10').innerHTML = html;
+				}
+				);
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get(dataType为script)</legend>
+			<div>
+				<button id="get11">GET</button>
+				<div id="content11" class="comment">
+
+				</div>
+				<textarea>
+				var _$$ = $;
+				var url = 'http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js';
+				Ajax.getScript(url,null,function(){
+					$ = _$$;
+					$('content11').innerHTML = 'jQuery=>' + jQuery;
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(dataType为script，timeout==2)</legend>
+			<div>
+				<button id="get12">GET</button>
+				<div id="content12" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'server.php',
+					data: {timeout:10},
+					dataType: 'script',
+					timeout: 2000,
+					onbefore: function(){
+						$('content12').innerHTML = '请求已发送...';
+					},
+					onerror: function(xhr,ops,status){
+						$('content12').innerHTML = '服务器响应超时！错误类型：' + status;
+					}
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(dataType为jsonp，timeout==2)</legend>
+			<div>
+				<button id="get13">GET</button>
+				<div id="content13" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'server.php',
+					data: {timeout:10},
+					dataType: 'jsonp',
+					timeout: 2000,
+					onbefore: function(){
+						$('content13').innerHTML = '请求已发送...';
+					},
+					onerror: function(xhr,ops,status){
+						$('content13').innerHTML = '服务器响应超时！错误类型：' + status;
+					}
+				});
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(dataType为script，捕获error)</legend>
+			<div>
+				<button id="get14">GET</button>
+				<div id="content14" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'error.js',
+					dataType: 'script',
+					label: 'Test',
+					cache: false,
+					onbefore: function(){
+						$('content14').innerHTML = '请求已发送...';
+					},
+					onsuccess:function(xhr,ops,status){
+						$('content14').innerHTML = '脚本加载成功！';
+					},
+					onerror: function(xhr,ops,status){
+						$('content14').innerHTML = '脚本加载出错！错误类型：' + status;
+					}
+				});
+				ajax.request();
+				</textarea>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Get/Post(dataType为jsonp，捕获error)</legend>
+			<div>
+				<button id="get15">GET</button>
+				<div id="content15" class="comment">
+
+				</div>
+				<textarea>
+				var ajax = new Ajax({
+					url: 'http://youa.baidu.com/suggest/se/s',
+					dataType: 'jsonp',
+					cache: false,
+					onbefore: function(){
+						$('content15').innerHTML = '请求已发送...';
+					},
+					onsuccess:function(xhr,ops,status){
+						$('content15').innerHTML = '脚本加载成功！';
+					},
+					onerror: function(xhr,ops,status){
+						$('content15').innerHTML = '脚本加载出错！错误类型：' + status;
+					},
+					oncomplete: function(){
+						$('content15').innerHTML += '<br>请求完成！';
+					}
+				});
+				ajax.request();
+				</textarea>
+			</div>
+		</fieldset>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../apps/core_dom_youa.js"></script>
+	<script type="text/javascript" src="demo.js"></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+		BB.ObjectH.mix(window,BB);
+		NodeW.query(0,'.comment').on('dblclick',function(){
+			NodeW.nextSibling(this,'textarea').show('block');
+		});
+		
+		NodeW.query(0,'.comment + textarea').on('dblclick',function(){
+			(new NodeW(this)).hide();
+		});
+
+		DomU.ready(function(){
+			$$('getString').on('click',function(){
+				Ajax.get('server.php','key=value',function(text){
+					$('content1').innerHTML = text;
+				});
+			});
+			$$('postString').on('click',function(){
+				Ajax.post('server.php','key=value',function(text){
+					$('content1').innerHTML = text;
+				});
+			});
+
+			$$('getObject').on('click',function(){
+				Ajax.get('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content2').innerHTML = text;
+				});
+			});
+			$$('postObject').on('click',function(){
+				Ajax.post('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content2').innerHTML = text;
+				});
+			});
+
+			var opt = Ajax.options;
+			ObjectH.mix(Ajax.options,{
+				headers:{
+					'X-Sender':'X-Test-Header'
+				}
+			});
+			$$('get3').on('click',function(){
+				Ajax.get('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content3').innerHTML = text;
+				});
+			});
+			$$('post3').on('click',function(){
+				Ajax.post('server.php',{
+					key1: 'value1',
+					key2: 'value2',
+					key3: [1,2,3,4]
+				},function(text){
+					$('content3').innerHTML = text;
+				});
+			});
+			Ajax.options = opt;
+
+			
+			$$('get4').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					timeout: 2000,
+					onbefore: function(){
+						$('content4').innerHTML = '请求中...';
+					},
+					onerror: function(xhr,options,status){
+						$('content4').innerHTML = 'Error occurred! Error type is: ' + status;
+					},
+					oncomplete: function(){
+						$('content4').innerHTML += ' Request Completed!';
+					}
+				});
+				ajax.request({
+					timeout: 4
+				});
+			});
+			$$('post4').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					method: 'post',
+					timeout: 2000,
+					onbefore: function(){
+						$('content4').innerHTML = '请求中...';
+					},
+					onerror: function(xhr,options,status){
+						$('content4').innerHTML = 'Error occurred! Error type is: ' + status;
+					},
+					oncomplete: function(){
+						$('content4').innerHTML += ' Request Completed!';
+					}
+				});
+				ajax.request({
+					timeout: 4
+				});
+			});
+
+			$$('get5').on('click',function(){
+				Ajax.get($('getForm'),function(text){
+					$('content5').innerHTML = text;
+				});
+			});
+			$$('post5').on('click',function(){
+				Ajax.post($('postForm'),function(text){
+					$('content5').innerHTML = text;
+				});
+			});
+
+			var abortGetAjax,abortPostAjax;
+			$$('get6').on('click',function(){
+				switch(this.innerHTML){
+					case 'GET':
+						abortGetAjax = new Ajax({
+							url: 'server.php',
+							method: 'get',
+							data: 'timeout=10',
+							onbefore: function(){
+								$('content6').innerHTML = '请求中...';
+							},
+							oncancel: function(xhr,options){
+								$('content6').innerHTML = 'Request canceled!';
+							}
+						});
+						abortGetAjax.request();
+						this.innerHTML = 'Abort';
+						break;
+					case 'Abort':
+						abortGetAjax.cancel();
+						this.innerHTML = 'GET';
+						break;
+				}
+			});
+			$$('post6').on('click',function(){
+				switch(this.innerHTML){
+					case 'POST':
+						abortGetAjax = new Ajax({
+							url: 'server.php',
+							method: 'post',
+							data: 'timeout=10',
+							onbefore: function(){
+								$('content6').innerHTML = '请求中...';
+							},
+							oncancel: function(xhr,options){
+								$('content6').innerHTML = 'Request canceled!';
+							}
+						});
+						abortGetAjax.request();
+						this.innerHTML = 'Abort';
+						break;
+					case 'Abort':
+						abortGetAjax.cancel();
+						this.innerHTML = 'POST';
+						break;
+				}
+			});
+
+			
+
+			$$('get7').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					method: 'get',
+					onbefore: function(){
+						return confirm('是否继续发送请求？');
+					},
+					onsuccess: function(text){
+						$('content7').innerHTML = '请求已发送！';
+					}
+				});
+				ajax.request({test:'test'});
+			});
+			$$('post7').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					method: 'post',
+					onbefore: function(){
+						return confirm('是否继续发送请求？');
+					},
+					onsuccess: function(text){
+						$('content7').innerHTML = '请求已发送！';
+					}
+				});
+				ajax.request();
+			});
+
+			
+			$$('get8').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					async: false,
+					onbefore: function(){
+						$('content8').innerHTML = '请求中...';
+					},
+					method: 'get',
+					onsuccess: function(text){
+						$('content8').innerHTML = text;
+					}
+				});
+				ajax.request({timeout:5});
+			});
+			$$('post8').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					async: false,
+					method: 'post',
+					onbefore: function(){
+						$('content8').innerHTML = '请求中...';
+					},
+					onsuccess: function(text){
+						$('content8').innerHTML = text;
+					}
+				});
+				ajax.request({timeout:5});
+			});
+				
+			$$('get9').on('click',function(){
+				Ajax.getJSON('server.php',{type:'json'},function(json){
+					$('content9').innerHTML = "json.content: " + json.content;
+				});
+			});
+			$$('post9').on('click',function(){				
+				var ajax = new Ajax({
+					url: 'server.php',
+					onbefore: function(){
+						$('content9').innerHTML = '请求中...';
+					},
+					dataType: 'json',
+					method: 'post',
+					onsuccess: function(json){
+						$('content9').innerHTML = "json.content: " + json.content;
+					}
+				});
+				ajax.request({type:'json'});
+
+			});
+
+			$$('suggestKeyword').on('keyup',function(){
+				var keyword = this.value;
+				var url = 'http://youa.baidu.com/suggest/se/s';
+				Ajax.getJSONP(url,{
+					cmd: 'suggest',
+					type: 'kwd',
+					max_count: 10,
+					charset: 'utf-8',
+					category: 0,
+					keyword: keyword
+				},function(json){
+					var html = '';
+					if( json.err != 'ok' )
+						html = '服务器错误！';
+					else{
+						var r = [];
+						ArrayH.forEach(json.r,function(item){
+							r.push(item.display);
+						});
+						html = r.join('<br>');
+					}
+					$('content10').innerHTML = html;
+				}
+				);
+			});
+
+			
+			var _$$ = $;
+			$$('get11').on('click',function(){
+				Ajax.getScript('http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js',null,function(){
+					$ = _$$;
+					$('content11').innerHTML = 'jQuery=>' + jQuery;
+				});
+			});
+
+			$$('get12').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					data: {timeout:10},
+					dataType: 'script',
+					timeout: 2000,
+					onbefore: function(){
+						$('content12').innerHTML = '请求已发送...';
+					},
+					onerror: function(xhr,ops,status){
+						$('content12').innerHTML = '服务器响应超时！错误类型：' + status;
+					},
+					oncomplete: function(){
+						$('content12').innerHTML += '<br>请求完成！';
+					}
+				});
+				ajax.request();
+			});
+			$$('get13').on('click',function(){
+				var ajax = new Ajax({
+					url: 'server.php',
+					data: {timeout:10},
+					dataType: 'jsonp',
+					timeout: 2000,
+					onbefore: function(){
+						$('content13').innerHTML = '请求已发送...';
+					},
+					onerror: function(xhr,ops,status){
+						$('content13').innerHTML = '服务器响应超时！错误类型：' + status;
+					},
+					oncomplete: function(){
+						$('content13').innerHTML += '<br>请求完成！';
+					}
+				});
+				ajax.request();
+			});
+
+			$$('get14').on('click',function(){
+				var ajax = new Ajax({
+					url: 'error.js',
+					dataType: 'script',
+					label: 'Test',
+					cache: false,
+					onbefore: function(){
+						$('content14').innerHTML = '请求已发送...';
+					},
+					onsuccess:function(xhr,ops,status){
+						$('content14').innerHTML = '脚本加载成功！';
+					},
+					onerror: function(xhr,ops,status){
+						$('content14').innerHTML = '脚本加载出错！错误类型：' + status;
+					},
+					oncomplete: function(){
+						$('content14').innerHTML += '<br>请求完成！';
+					}
+				});
+				ajax.request();
+			});
+			
+			$$('get15').on('click',function(){
+				var ajax = new Ajax({
+					url: 'http://youa.baidu.com/suggest/se/s',
+					dataType: 'jsonp',
+					cache: false,
+					onbefore: function(){
+						$('content15').innerHTML = '请求已发送...';
+					},
+					onsuccess:function(xhr,ops,status){
+						$('content15').innerHTML = '脚本加载成功！';
+					},
+					onerror: function(xhr,ops,status){
+						$('content15').innerHTML = '脚本加载出错！错误类型：' + status;
+					},
+					oncomplete: function(){
+						$('content15').innerHTML += '<br>请求完成！';
+					}
+				});
+				ajax.request();
+			});
+		});
+	//]]>
+	</script>
+</html>

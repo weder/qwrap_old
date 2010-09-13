@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+	<head>
+		<title>UPLoader Multiple Forms Demo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<link href="../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+		<link href="https://www.baifubao.com/css/bbp/bbp-panel.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="../assets/Editor.css" rel="stylesheet" type="text/css" media="screen"/>
+		<script type="text/javascript" src="../../../apps/core_dom_youa.js"></script>
+		<script type="text/javascript" src="../../panel/panel.js"></script>
+		<script type="text/javascript" src="../../../components/uploader/uploader.js"></script>
+		<style type="text/css">
+			body{
+				background: #fff;
+			}
+			#main{
+				width: 680px;
+				margin: 10px auto 0;
+				font-family: "Microsoft YaHei","Microsoft JhengHei",arial;
+			}
+			#main h3{
+				color: #333;
+				font-size: 16px;
+				font-weight: bold;
+				margin: 0 5px 5px 0;
+			}
+			.upload_form ul{				
+				background: #FCFCFC;
+			}
+			.upload_form ul li{
+				padding: 3px 15px;
+				font-size: 14px;
+			}
+			.upload_form ul li.last{
+				background: #fff;
+			}
+			#main button{
+				width: 70px;
+				height: 30px;
+				font-size: 15px;
+				margin-left: 100px;
+			}
+			.status{
+				text-align: center;
+				color: #333;
+			}
+			.imgs{
+				border: 1px solid #ddd;
+				background: #eee;
+				padding-left: 13px;
+			}
+			.imgs li{	
+				float: left;
+				margin: 5px;
+			}
+			.imgs img{
+				width: 80px;
+				border: 1px solid #ccc;
+				background: #fff;
+				padding: 2px;
+			}
+			.error{ color: red;}
+			.wrapper{
+				float: left;
+				margin-left: 10px;
+				width: 320px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="doc3">
+			<div id="main" class="cls">
+				<h3>上传文件</h3>
+				<div class="wrapper">
+					<h3>表单1</h3>
+					<form id="uploadForm1" class="upload_form" action="server.php" method="post" enctype="multipart/form-data">
+						<ul>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li class="last"><button type="submit">上传</button></li>
+						</ul>
+					</form>
+					<ul id="imgs1" class="imgs cls" style="display:none">
+					</ul>
+				</div>
+				<div class="wrapper">
+					<h3>表单2</h3>
+					<form id="uploadForm2" class="upload_form" action="server.php" method="post" enctype="multipart/form-data">
+						<ul>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li><span>选择: </span><input type="file" name="files[]"/></li>
+							<li class="last"><button type="submit">上传</button></li>
+						</ul>
+					</form>
+					<ul id="imgs2" class="imgs cls" style="display:none">
+					</ul>
+				</div>
+			</div>
+			<div id="status" style="display:none" class="status">文件上传中...请稍后</div>
+			<div id="error" style="display:none" class="status error">文件上传出错!</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		QW.ObjectH.mix(window,QW);
+		var D = DomU, N = NodeH;
+		/*Start--上传组件相关代码*/
+		QW.UPLoader.init({
+			/*jsonverify: false,*/
+			forms: ['uploadForm1','uploadForm2'],
+			onbefore: function(form){
+				$$('status').show();
+				$$('error').hide();
+				var imgc = null;
+				if( form && form.id == 'uploadForm1' )
+					imgc = 'imgs1';
+				else
+					imgc = 'imgs2';
+				$$(imgc).hide();
+				return true;
+			},
+			oncomplete: function(responseText,form){
+				$$('status').hide();
+				var res = eval('(' + responseText + ')');
+				if( res.err != 'ok' ){
+					$$('error').show();
+					return;
+				}
+				var results = [];
+				for( var i = 0; i < res.files.length; i++){
+					results.push('<li><a href="' + res.files[i] + '" target="_blank"><img src="' + res.files[i] + '"/></a></li>');
+				}
+				var imgc = null;
+				if( form && form.id == 'uploadForm1' )
+					imgc = 'imgs1';
+				else
+					imgc = 'imgs2';
+				$(imgc).innerHTML = results.join('');
+				$$(imgc).show();
+			}
+		});		
+		/*上传组件相关代码--End*/
+		var cks = document.getElementsByName('state');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('hds').value = this.value;
+			});
+		}
+
+		cks = document.getElementsByName('xshost');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('xhs').value = this.value;
+			});
+		}
+
+		cks = document.getElementsByName('json');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('json').value = this.value;
+			});
+		}
+	</script>
+</html>
