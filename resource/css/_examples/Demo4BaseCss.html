@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>base.css应用演示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="../base.css" rel="stylesheet" type="text/css" media="screen">
+<style>
+.highlight-sect{background-color:#eef;}
+</style>
+<script type="text/javascript">
+function changeId(el,id){
+	el.id=id;
+}
+</script>
+</head>
+
+<body>
+<div id=doc3>
+	<h1 class="page-h1">Page H1 演示本网站页面的主要风格.</h1>
+	<div id=hd>
+		比较常见的几种页面宽度:
+		<select onchange="changeId(this.parentNode.parentNode,this.value);">
+			<option value="doc1">doc1(100%)</option>
+			<option value="doc2">doc2(760px)</option>
+			<option value="doc3" selected>doc3(950px)</option>
+		</select>
+	</div>
+	<div id="bd" >
+
+		<div class="section-ctn">
+			<h3 class="section-hd">演示attr表格</h3>
+			<div class="section-btn-ctn"><button>按钮1</button>&nbsp;<button type=button>按钮2</button></div>
+			<table class="attr-tbl">
+				<tbody>
+					<tr>
+						<td class="attr-name">兵器</td>
+						<td class="attr-content1">金箍棒</td>
+						<td class="attr-name">目前保管者</td>
+						<td class="attr-content">孙悟空</td>
+					</tr>
+					<tr>
+						<td class="attr-name">威力</td>
+						<td class="attr-content1">90</td>
+						<td class="attr-name">是否可售</td>
+						<td class="attr-content">是</td>
+					</tr>
+					<tr>
+						<td class="attr-name">简介</td>
+						<td class="attr-content" colspan=3>一下子说不清</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="section-ctn">
+			<h3 class="section-hd">演示list表格</h3>
+			<table class="list">
+				<thead>
+					<tr><th>&nbsp;</th><th>兵器</th><th>目前保管者</th><th>威力</th><th>简介</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>金箍棒</td>
+						<td>孙悟空</td>
+						<td>90</td>
+						<td>原为大禹所有,用于测量海水深度,<br/>后被东海龙王收藏,作为定海神针,<br/>五百年前被孙悟空借走至今</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>九齿钉耙</td>
+						<td>猪悟净</td>
+						<td>70</td>
+						<td>不详</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>锦襕袈裟</td>
+						<td>唐三藏</td>
+						<td>95</td>
+						<td>观音亲手赠送于唐三藏,<br/>三界之内独一无二的防身法宝</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="ft">
+		QWrap (<a href="http://www.qwrap.com">www.qwrap.com</a>)
+	</div>
+</div>
+
+</body>
+</html>
