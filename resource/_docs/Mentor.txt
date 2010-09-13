@@ -1,0 +1,17 @@
+
+mentor(顾问)规范：
+mentor是一个对象，而不是一个Class。
+假设obj是一个{}，mixin(obj,mentor)后(由于{}是干净的，所以这时是无冲突移植)，
+obj正常拥有mentor的所有功能。
+
+对于有冲突移植，由移植者担负后果
+
+如果一个ClassA满足: "new ClassA(...)的结果是一个mentor"
+那么也说这个ClassA满足mentor规范
+
+例如：Effect/Anim等都可以写成mentor，
+在继承时，可以直接通过以下来实现:
+ObjectH.mixMentor=function(obj,mentor){
+	return ObjectH.mix(obj,mentor);
+}
+
