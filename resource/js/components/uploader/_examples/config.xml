@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>UPLoader</name>
+		<author>Miller</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified>2010/5/27</last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>文件上传-单表单</title>
+			<discription>基于IFRAME的无刷新跨域文件上传组件，主要用于图片上传，基于默认的回跳静态URL。</discription>
+			<url>UPLoader_Single_Form.html</url>
+			<image>logo.jpg</image>
+		</example>
+		<example>
+			<title>文件上传-多表单</title>
+			<discription>基于IFRAME的无刷新跨域文件上传组件，主要用于图片上传，基于默认的回跳静态URL。</discription>
+			<url>UPLoader_Multiple_Forms.html</url>
+			<image>logo.jpg</image>
+		</example>
+	</examples>
+</config>

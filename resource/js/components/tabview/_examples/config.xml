@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>TabView</name>
+		<author>wc-rank</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>通常示例</title>
+			<discription></discription>
+			<url>demo.htm</url>
+			<image>demo.jpg</image>
+		</example>
+	</examples>
+</config>

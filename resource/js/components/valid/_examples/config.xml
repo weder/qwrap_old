@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>Valid</name>
+		<author>JK</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>通用验证示例以及生成器</title>
+			<discription>通用验证示例以及生成器</discription>
+			<url>Valid-BaseDemo.htm</url>
+			<image>1.jpg</image>
+		</example>
+		<example>
+			<title>绑定电话号码</title>
+			<discription>绑定电话区号/号码/分机号[/手机号]</discription>
+			<url>Valid-bindPhoneEls.htm</url>
+			<image>1.jpg</image>
+		</example>
+	</examples>
+</config>

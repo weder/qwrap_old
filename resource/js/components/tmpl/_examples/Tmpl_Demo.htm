@@ -1,0 +1,72 @@
+<head>
+<title>JK:</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+<script type="text/javascript" src="../../../apps/core_dom_pure.js"></script>
+<script type="text/javascript" src="../tmpl.js"></script>
+</head>
+<body>
+<div id=doc3>
+	<div id=hd style="margin:10px;font-size:18px;">
+		字符串模板
+	</div>
+	<div id="bd" >
+		<div class="section-ctn">
+			模板:
+			<textarea id=sTmpl style="display:block;width:500px;height:150px;">
+	{strip}{js var a=5; 
+		for(var i=1;i<=a;i++){
+			print(i+',');
+		}
+	;}上山打老虎,{$name}
+	{if ($brother)}的哥哥叫{$brother.name},比他大{$brother.old-$old}岁
+	{elseif ($brothers)}有{$brothers.length}个哥哥，
+		他们是
+		{for (var i=0;i<$brothers.length;i++)}
+			"{$brothers[i].name}"
+		{/for}
+	{else}没有哥哥
+	{/if}{/strip}
+			</textarea>
+		</div>
+		<div class="section-ctn">
+			<button onclick="eval(document.getElementById('sCode').value);">运行以下代码</button>
+			<textarea id=sCode style="display:block;width:500px;height:150px;">
+	alert(QW.Tmpl(document.getElementById("sTmpl").value)({name:"李四"},1));
+
+	alert(QW.Tmpl(document.getElementById("sTmpl").value)({name:"王五",old:10,brother:{name:"王大刀",old:15}}));
+
+	alert(QW.Tmpl(document.getElementById("sTmpl").value)({name:"张秋宝",brothers:[{name:"张孟春"},{name:"张仲夏"}]}));
+			</textarea>
+		</div>
+		<div class="section-ctn">
+			<hr/>
+			模板使用说明：
+			<ul>
+			<li><font style="color:red">***</font>分隔符为{xxx}，"}"之前没有空格字符。
+			<li><font style="color:red">***</font>js表达式/js语句里的'}', 需使用' }'，即前面有空格字符
+			<li><font style="color:red">***</font>{strip}...{/strip}里的所有\r\n打头的空白都会被清除掉
+			<li><font style="color:red">***</font>{}里只能使用表达式，不能使用语句，除非使用以下标签
+			<li>{js ...}		－－任意js语句, 里面如果需要输出到模板，用print("aaa");
+			<li>{if(...)}		－－if语句，写法为{if($a>1)},需要自带括号
+			<li>{elseif(...)}	－－elseif语句，写法为{elseif($a>1)},需要自带括号
+			<li>{else}			－－else语句，写法为{else}
+			<li>{/if}			－－endif语句，写法为{/if}
+			<li>{for(...)}		－－for语句，写法为{for(var i=0;i<1;i++)}，需要自带括号
+			<li>{/for}			－－endfor语句，写法为{/for}
+			<li>{while(...)}	－－while语句,写法为{while(i-->0)},需要自带括号
+			<li>{/while}		－－endwhile语句, 写法为{/while}
+			</ul>
+			<hr/>
+			待解决问题：
+			<ul>
+			<li>语法错误提示应该更详细－－－－这真是个难题
+			</ul>
+		</div>
+	</div>
+	<div id="ft">
+		QW
+	</div>
+</div>
+</body>
+</html>

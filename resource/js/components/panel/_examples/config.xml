@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<info>
+		<name>Panel</name>
+		<author>wc-rank</author>
+		<version>0.1</version>
+		<create-date></create-date>
+		<last-modified></last-modified>
+	</info>
+	<examples>
+		<example>
+			<title>Dialog</title>
+			<discription></discription>
+			<url>dialog.html</url>
+			<image>dialog.jpg</image>
+		</example>
+		<example>
+			<title>Render</title>
+			<discription></discription>
+			<url>render.html</url>
+			<image>render.jpg</image>
+		</example>
+		<example>
+			<title>MessageBox</title>
+			<discription></discription>
+			<url>messagebox.html</url>
+			<image>messagebox.jpg</image>
+		</example>
+		<example>
+			<title>Popup</title>
+			<discription></discription>
+			<url>bubblePpopup.html</url>
+			<image>popup.jpg</image>
+		</example>
+	</examples>
+</config>

@@ -1,0 +1,12 @@
+/*  container  */
+.tree-wrap {text-align:left;}
+.tree-wrap .highlight {background-color:#CCFFEE;color:black;font-weight:bold;}
+.tree-wrap-inner ul {margin-left:6px; padding-left:12px; border-leftJKJK:#cccccc solid 1px;}
+.tree-wrap .node-ctn {display:inline}
+.tree-wrap-inner .ms-over{background-color:#CCEECC;}
+.folder-closed {}
+.folder-open {}
+.folder-img-open {background:url(./open.gif) no-repeat center left; width:18px; display:-moz-inline-box;display:inline-block;cursor:pointer;}
+.folder-img-root {background:url(./root.gif) no-repeat center left; width:18px; display:-moz-inline-box;display:inline-block;}
+.folder-img-loading {background:url(./loading.gif) no-repeat center left; width:18px; display:-moz-inline-box;display:inline-block;cursor:pointer;}
+.folder-img-closed {background:url(./closed.gif) no-repeat center left; width:18px; display:-moz-inline-box;display:inline-block;cursor:pointer;}

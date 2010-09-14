@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+	<head>
+		<title>UPLoader Single Form Demo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+		<link href="../../../apps/assets/base.css" rel="stylesheet" type="text/css" media="screen"/>
+		<link href="https://www.baifubao.com/css/bbp/bbp-panel.css" rel="stylesheet" type="text/css" media="screen">
+		<link href="../assets/Editor.css" rel="stylesheet" type="text/css" media="screen"/>
+		<script type="text/javascript" src="../../../apps/core_dom_youa.js"></script>
+		<script type="text/javascript" src="../../panel/panel.js"></script>
+		<script type="text/javascript" src="../../../components/uploader/uploader.js"></script>
+		<style type="text/css">
+			body{
+				background: #fff;
+			}
+			#main{
+				width: 320px;
+				margin: 10px auto 0;
+				font-family: "Microsoft YaHei","Microsoft JhengHei",arial;
+			}
+			#main h3{
+				color: #333;
+				font-size: 16px;
+				font-weight: bold;
+				margin: 0 5px 5px 0;
+			}
+			#uploadForm ul{				
+				background: #FCFCFC;
+			}
+			#uploadForm ul li{
+				padding: 3px 15px;
+				font-size: 14px;
+			}
+			#uploadForm ul li.last{
+				background: #fff;
+			}
+			#main button{
+				width: 70px;
+				height: 30px;
+				font-size: 15px;
+				margin-left: 100px;
+			}
+			.status{
+				text-align: center;
+				color: #333;
+			}
+			#imgs{
+				border: 1px solid #ddd;
+				background: #eee;
+				padding-left: 13px;
+			}
+			#imgs li{	
+				float: left;
+				margin: 5px;
+			}
+			#imgs img{
+				width: 80px;
+				border: 1px solid #ccc;
+				background: #fff;
+				padding: 2px;
+			}
+			.error{ color: red;}
+
+			#tool{
+				background: #eee;
+				width: 240px;
+				border: 1px solid #ccc;
+				padding: 5px;
+				margin: 10px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				font-size: 13px;
+			}
+			#tool label{
+				display: inline-block;
+				width: 110px;
+				text-align: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="doc3">
+			<div id="main">
+				<h3>上传文件</h3>
+				<form id="uploadForm" action="server.php" method="post" enctype="multipart/form-data">
+					<ul>
+						<li><span>选择: </span><input type="file" name="files[]"/></li>
+						<li><span>选择: </span><input type="file" name="files[]"/></li>
+						<li><span>选择: </span><input type="file" name="files[]"/></li>
+						<li><span>选择: </span><input type="file" name="files[]"/></li>
+						<li><span>选择: </span><input type="file" name="files[]"/></li>
+						<li class="last"><button type="submit">上传</button></li>
+					</ul>
+					<input id="hds" type="hidden" name="state" value="ok" autocomplete="off">
+					<input id="xhs" type="hidden" name="xshost" value="local" autocomplete="off">
+					<input id="json" type="hidden" name="json" value="ok" autocomplete="off">
+				</form>
+				<ul id="imgs" class="cls" style="display:none">
+				</ul>
+				<div id="status" style="display:none" class="status">文件上传中...请稍后</div>
+				<div id="error" style="display:none" class="status error">文件上传出错!</div>
+			</div>
+			<div id="tool">
+				<label title="修改服务器返回的状态值以测试不同的响应。">服务器返回状态:</label> 
+				<input name="state" type="radio" checked="checked" value="ok" autocomplete="off"> OK &nbsp; 
+				<input name="state" type="radio" value="!ok" autocomplete="off"> !OK <br>				
+				<label title="为确保响应成功，服务器响应的域必须与当前页面同域。此选项用于修改服务器响应的域来测试在跨域情况下的组件响应。">IFRAME响应跨域:</label> 
+				<input name="xshost" type="radio" checked="checked" value="local" autocomplete="off"> 本域 
+				<input name="xshost" type="radio" value="http://www.baidu.com" autocomplete="off"> 跨域<br>				
+				<label title="测试服务器返回错误JSON结构的情况下的组件响应。">服务器JSON结构:</label> 
+				<input name="json" type="radio" checked="checked" value="ok" autocomplete="off"> 正确 
+				<input name="json" type="radio" value="error" autocomplete="off"> 错误
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		QW.ObjectH.mix(window,QW);
+		var D = DomU, N = NodeH;
+		/*Start--上传组件相关代码*/
+		QW.UPLoader.init({
+			/*jsonverify: false,*/
+			forms: 'uploadForm',
+			onbefore: function(form){
+				$$('status').show();
+				$$('error').hide();
+				$$('imgs').hide();
+				return true;
+			},
+			oncomplete: function(responseText,form){
+				$$('status').hide();
+				var res = eval('(' + responseText + ')');
+				if( res.err != 'ok' ){
+					$$('error').show();
+					return;
+				}
+				var results = [];
+				for( var i = 0; i < res.files.length; i++){
+					results.push('<li><a href="' + res.files[i] + '" target="_blank"><img src="' + res.files[i] + '"/></a></li>');
+				}
+				$('imgs').innerHTML = results.join('');
+				$$('imgs').show();
+			}
+		});		
+		/*上传组件相关代码--End*/
+		var cks = document.getElementsByName('state');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('hds').value = this.value;
+			});
+		}
+
+		cks = document.getElementsByName('xshost');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('xhs').value = this.value;
+			});
+		}
+
+		cks = document.getElementsByName('json');
+		for( var i = 0, len = cks.length; i < len; i++ ){
+			$$(cks[i]).on('click',function(){
+				$('json').value = this.value;
+			});
+		}
+	</script>
+</html>
